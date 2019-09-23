@@ -1,8 +1,8 @@
 name: rt_progress_hud
 description: A new Flutter package.
 version: 0.0.1
-author:
-homepage:
+author: lrongtan <844928336@qq.com>
+homepage: https://github.com/lrongtan/flutter_rt_progress_hud.git
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
