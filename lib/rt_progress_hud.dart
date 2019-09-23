@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'dart:async';
 
 
-
-
 //菊花半径
 const double _rtDefaultIndicatorRadius = 15.0;
 
@@ -73,9 +71,67 @@ enum HUDStyle {
 }
 
 class RTProgressHUD{
+  
+  factory RTProgressHUD() => _getInstance();
+
+  static RTProgressHUD _instance;
+
+  static RTProgressHUD get instance => _getInstance();
+
+  static RTProgressHUD _getInstance(){
+    if(_instance == null){
+      _instance = RTProgressHUD._init();
+    }
+  }
+
+  RTProgressHUD._init();
 
   OverlayEntry _overlayEntry;//实现在任意页面都能弹窗的组件
 
+  RTProgressView _hudView;
+
+  bool barrierDismissible = true;
+
+  BuildContext _context;
+
+  RTProgressHUD show(BuildContext context){
+    _context = context;
+
+    if(_overlayEntry == null){
+      _overlayEntry = OverlayEntry(builder: (context){
+        return Container();
+      });
+      Overlay.of(context).insert(_overlayEntry);
+    }
+  }
+
+
+//  auto dismiss
+
+  Timer _timer;
+  void scheduleDismiss({Duration time = const Duration(milliseconds: _rtDefaultscheduleDismiss)}){
+    if(_timer != null){
+      _timer.cancel();
+      _timer = null;
+    }
+    _timer = new Timer.periodic(time, (t){
+      _timer.cancel();
+      _timer = null;
+      remove();
+    });
+  }
+
+  void remove(){
+    if(_context != null){
+      _overlayEntry.remove();
+      _overlayEntry = null;
+    }
+  }
+
+  static void dismiss(){
+
+
+  }
 }
 
 
