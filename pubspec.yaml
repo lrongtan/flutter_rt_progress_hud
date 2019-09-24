@@ -11,9 +11,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_screenutil: ^0.5.2
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -37,7 +41,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: HudIconFont
+      fonts:
+        - asset: fonts/HudIconFont.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
