@@ -1,6 +1,6 @@
 name: rt_progress_hud
 description: A new Flutter package.
-version: 0.0.1
+version: 0.0.5
 author: lrongtan <844928336@qq.com>
 homepage: https://github.com/lrongtan/flutter_rt_progress_hud.git
 
@@ -25,10 +25,14 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
-  fonts:
-    - family:  HudIconFont
-      fonts:
-        - asset: fonts/HudIconFont.ttf
+#  fonts:
+#
+#
+#    - family: HudIconFont
+#      fonts:
+#        - asset: fonts/HudIconFont.ttf
+
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

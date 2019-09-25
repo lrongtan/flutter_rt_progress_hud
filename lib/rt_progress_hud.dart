@@ -4,11 +4,14 @@ library rt_progress_hud;
 //这边引入了flutter_screenutil进行屏幕适配。如果项目没有使用这个进行适配。需要在项目入口的第一个页面配置
 //ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
 
+
+
+//想配一个自己的iconFont。但是package导入的时候只有代码导入进项目。暂时放弃。
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
-import 'hud_icon_font_icons.dart';
 
 //菊花半径
 const double _rtDefaultIndicatorRadius = 15.0;
@@ -23,7 +26,7 @@ const Color _rtDefaultContentColor = Colors.black54;
 const double _rtDefaultContentRadius = 10.0;
 
 // 视图内边距
-const double _rtDefaultContentPadding = 30;
+const double _rtDefaultContentPadding = 20;
 
 // label 字体颜色
 const Color _rtDefaultLabelColor = Colors.white;
@@ -53,7 +56,7 @@ const double _rtDefaultContentMinWidth = 200;
 const int _rtDefaultscheduleDismiss = 1000;
 
 // content内容的内边距
-const double _rtDefaultItemPadding = 20;
+const double _rtDefaultItemPadding = 15;
 
 // content内容只有文本的内边距
 const double _rtOnlyTextItemPadding = 10;
@@ -317,21 +320,21 @@ class _RTProgressViewState extends State<RTProgressView>
     } else if (widget.controller.hudStyle == HUDStyle.None) {
 
     } else {
-      Icon icon = Icon(Icons.assistant_photo,
+      Icon icon = Icon(Icons.check_circle,
         size: ScreenUtil().setWidth(_rtDefaultStateIconWidth),
         color: Colors.white,);
       if (widget.controller.hudStyle == HUDStyle.Success) {
-        icon = Icon(HudIconFont.success_1,
+        icon = Icon(Icons.check_circle_outline,
           size: ScreenUtil().setWidth(_rtDefaultStateIconWidth),
           color: Colors.white,);
       }
       if (widget.controller.hudStyle == HUDStyle.Warn) {
-        icon = Icon(HudIconFont.warn_1,
+        icon = Icon(Icons.error_outline,
           size: ScreenUtil().setWidth(_rtDefaultStateIconWidth),
           color: Colors.white,);
       }
       if (widget.controller.hudStyle == HUDStyle.Fail) {
-        icon = Icon(HudIconFont.fail_1,
+        icon = Icon(Icons.clear,
           size: ScreenUtil().setWidth(_rtDefaultStateIconWidth),
           color: Colors.white,);
       }
