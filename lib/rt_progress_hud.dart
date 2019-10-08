@@ -12,6 +12,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
+import 'hud_icon_font_icons.dart';
+import 'hud_rate_widget.dart';
 
 //菊花半径
 const double _rtDefaultIndicatorRadius = 15.0;
@@ -77,7 +79,8 @@ enum HUDStyle {
   Success, //成功
   Fail, //失败
   Warn, //警告
-  Custom, //自定义 。。。。未实现
+  Custom, //自定义
+  Rate,//进度条
 }
 
 class RTProgressHUD {
@@ -171,6 +174,18 @@ class RTProgressHUD {
     return _instance;
   }
 
+//  设置自定义widget
+  RTProgressHUD setCustomWidget(Widget customWidget) {
+    _viewController.hudStyle = HUDStyle.Custom;
+    _viewController.customWidget = customWidget;
+    return _instance;
+  }
+//  设置进度
+  RTProgressHUD setRate(double newRate){
+    _viewController.rate = newRate;
+    return _instance;
+  }
+
 
   //  显示纯文本 自动dismiss
   static void showText(BuildContext context, String label) {
@@ -214,6 +229,13 @@ class RTProgressHUD {
     _instance
         .setStyle(HUDStyle.Fail)
         .setLabel(label)
+        .show(context)
+        .scheduleDismiss();
+  }
+//  加载自定义widget
+  static void showCustomWidget(BuildContext context, String label, Widget customWidget){
+    _getInstance();
+    _instance.setCustomWidget(customWidget).setLabel(label)
         .show(context)
         .scheduleDismiss();
   }
@@ -319,8 +341,19 @@ class _RTProgressViewState extends State<RTProgressView>
       );
     } else if (widget.controller.hudStyle == HUDStyle.None) {
 
+    } else if (widget.controller.hudStyle == HUDStyle.Rate) {
+      content = Container(
+        padding: EdgeInsets.all(ScreenUtil().setWidth(_rtDefaultItemPadding)),
+        child: CircleProgressView(rate: widget.controller.rate,),
+      );
+
+    } else if (widget.controller.hudStyle == HUDStyle.Custom) {
+      content = Container(
+        padding: EdgeInsets.all(ScreenUtil().setWidth(_rtDefaultItemPadding)),
+        child: widget.controller.customWidget ?? Container(),
+      );
     } else {
-      Icon icon = Icon(Icons.check_circle,
+      Icon icon = Icon(HudIconFont.success,
         size: ScreenUtil().setWidth(_rtDefaultStateIconWidth),
         color: Colors.white,);
       if (widget.controller.hudStyle == HUDStyle.Success) {
@@ -329,12 +362,12 @@ class _RTProgressViewState extends State<RTProgressView>
           color: Colors.white,);
       }
       if (widget.controller.hudStyle == HUDStyle.Warn) {
-        icon = Icon(Icons.error_outline,
+        icon = Icon(HudIconFont.warn,
           size: ScreenUtil().setWidth(_rtDefaultStateIconWidth),
           color: Colors.white,);
       }
       if (widget.controller.hudStyle == HUDStyle.Fail) {
-        icon = Icon(Icons.clear,
+        icon = Icon(HudIconFont.fail,
           size: ScreenUtil().setWidth(_rtDefaultStateIconWidth),
           color: Colors.white,);
       }
@@ -416,21 +449,30 @@ class _RTProgressViewState extends State<RTProgressView>
 
 // 内容显示对象。
 class RTProgressViewValue {
+
   HUDStyle hudStyle;
   String mLabel;
   String mDetailsLabel;
+  Widget customWidget;
+//  百分比 值为 0 - 1
+  double rate;
 
-  RTProgressViewValue({this.hudStyle, this.mLabel, this.mDetailsLabel});
+
+  RTProgressViewValue({this.hudStyle, this.mLabel, this.mDetailsLabel,this.customWidget, this.rate});
 
   RTProgressViewValue copyWith({
     HUDStyle style,
     String label,
     String detailLabel,
+    Widget customWidget,
+    double rate
   }) {
     return RTProgressViewValue(
         hudStyle: style ?? this.hudStyle,
         mLabel: label ?? this.mLabel,
-        mDetailsLabel: detailLabel ?? this.mDetailsLabel);
+        mDetailsLabel: detailLabel ?? this.mDetailsLabel,
+        customWidget: customWidget ?? this.customWidget,
+        rate: rate ?? this.rate);
   }
 }
 
@@ -457,6 +499,18 @@ class RTProgressViewController extends ValueNotifier<RTProgressViewValue> {
 
   set detailLabel(String newDetailLabel) {
     value = value.copyWith(detailLabel: newDetailLabel);
+  }
+
+  Widget get customWidget => value.customWidget;
+
+  set customWidget(Widget newWidget){
+    value = value.copyWith(customWidget: newWidget);
+  }
+
+  double get rate => value.rate;
+
+  set rate(double newRate){
+    value = value.copyWith(rate: newRate);
   }
 
   void dismiss({Function remove}) {

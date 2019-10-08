@@ -25,12 +25,10 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
-#  fonts:
-#
-#
-#    - family: HudIconFont
-#      fonts:
-#        - asset: fonts/HudIconFont.ttf
+  fonts:
+    - family: HudIconFont
+      fonts:
+        - asset: fonts/HudIconFont.ttf
 
 
   #   - family: Schyler

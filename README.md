@@ -18,13 +18,13 @@ RTProgressHUD.showWarn(BuildContext context, String label);
 RTProgressHUD.showFail(BuildContext context, String label);
 
 链式调用
-RTProgressHUD.
+```RTProgressHUD.
 instance.//全局单例
 setStyle().//设置hud的风格
 setLabel().//主标题
 setDetailLabel().副标题
 show().//展示
-scheduleDismiss()/dismiss();//延迟消失/马上消失
+scheduleDismiss()/dismiss();//延迟消失/马上消失```
 
 
 
