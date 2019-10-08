@@ -240,6 +240,12 @@ class RTProgressHUD {
         .scheduleDismiss();
   }
 
+//  加载进度条
+  static void showRate(BuildContext context, String label, double rate){
+    _getInstance().setStyle(HUDStyle.Rate).setRate(rate).setLabel(label).show(
+        context);
+  }
+
 }
 
 class RTProgressView extends StatefulWidget {
